@@ -1,12 +1,54 @@
 import java.lang.Math;
+import java.util.Scanner;
 
 class Sudoku{
 
-    public int[][] userInput(){
+    // queries the user for an input matching the inputCondition otherwise,
+    // shows an errorMessage and repeat query.
+    public String prompt(String query, String inputCondition, String errorMessage){
 
-        int[][] input = {};
-        return input;
+        Scanner s = new Scanner(System.in);
+        String userInput = "";
 
+        while(true){
+            try{
+
+                System.out.println(query);
+                userInput = s.nextLine();
+
+                if(userInput.length() != 0)
+                {
+                    // Only one letter
+                    if(!userInput.matches(inputCondition)){
+                        // \u26D4 No Entry Symbol
+                        throw new IllegalArgumentException(errorMessage);
+                    }
+                    break;
+                }
+
+            }catch(IllegalArgumentException e){
+
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return userInput;
+
+    }
+
+    public int[][] populate2DArray(int row, int col){
+
+        int[][] array = new int[row][col];
+        String s = "";
+
+        for(int r=0; r<row; r++){
+            for(int c=0; c<col; c++){
+
+                s = prompt("Input value for position (" + r + "," + c + "):" , "[0-9]" , "\nError: No other characters allowed, please input a single digit value between 0 and 9!\n");
+                array[r][c] = Integer.parseInt(s);
+            }
+        }
+        return array;
     }
 
     //helper method
@@ -164,7 +206,7 @@ class Sudoku{
         return false;
     }
 
-    public void solvable(boolean solution){
+    public void isSolvable(boolean solution){
         if(solution){
             System.out.println("Board Solved!");
         }else{
@@ -198,6 +240,18 @@ class Sudoku{
             {0,0,0,0,5,0,0,7,4}
         };
 
+        int[][] test11 =  {
+            { 3, 0, 1, 9, 0, 5, 0, 8, 0 },
+            { 0, 4, 0, 2, 7, 0, 5, 0, 0 },
+            { 0, 0, 7, 1, 0, 0, 0, 6, 4 },
+            { 6, 2, 4, 0, 0, 3, 0, 0, 5 },
+            { 8, 0, 5, 0, 0, 4, 0, 9, 2 },
+            { 1, 0, 0, 6, 0, 0, 0, 0, 3 },
+            { 5, 0, 2, 0, 0, 7, 3, 1, 9 },
+            { 0, 1, 6, 0, 2, 0, 4, 0, 0 },
+            { 0, 9, 0, 5, 8, 0, 7, 0, 0 }
+            };
+
         int[][] test3 = new int[1][2];
         int[][] test6 = new int[25][25];
 
@@ -209,13 +263,33 @@ class Sudoku{
 
         Sudoku s = new Sudoku();
 
+        int row = Integer.parseInt(
+
+            s.prompt(
+            "> Input row size: ",
+            "[0-9]",
+            "\nError: No other characters allowed, please input a single digit value between 0 and 9!\n"
+            )
+        );
+
+        int column = Integer.parseInt(
+
+            s.prompt(
+            "> Input column size: ",
+            "[0-9]",
+            "\nError: No other characters allowed, please input a single digit value between 0 and 9!\n"
+            )
+        );
+
+        int[][] a = s.populate2DArray(row, column);
+
         System.out.println("\n Solving...");
-        s.printGrid(test7);
+        s.printGrid(a);
 
         System.out.println();
-        s.solvable(s.fillBoard(test7));
+        s.isSolvable(s.fillBoard(a));
+        s.printGrid(a);
 
-        s.printGrid(test7);
         System.out.println("\nFIN\n");
 
     }
