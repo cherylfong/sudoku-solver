@@ -1,4 +1,9 @@
 # sudoku-solver
+
+:::info
+Visit [this README on HackMD](https://hackmd.io/@cherylfong/r1Ayp-MEw) for full LaTeX Math rendering.
+:::
+
 Solves a given 9x9 sudoku grid.
 
 <!-- $\sqrt{N}$ x  $\sqrt{N}$ -->
@@ -21,7 +26,7 @@ number in the cell is unique across all columns, rows and within the cell's 3x3 
 Also known as the end goal of the solution. It is to fill the entire sudoku grid up till the n<sup>th</sup>x n<sup>th</sup>
 cell, i.e. the last bottom right cell. Get to a point where there are no more empty cells.
 
-### Runtime and Complexity:
+### Runtime Complexity:
 
 The following is the method that solves the sudoku grid.
 ```java
@@ -125,7 +130,7 @@ and, $9 \space \cdot \space (\frac{n}{81}) \space \leq \space c \space \cdot \sp
 
 The third case or bound of the master method holds, therefore $T(n) = \Theta(f(n)) = \Theta(n^2)$
 
-$\square$ The time complexity is $\Theta(n^2)$
+$\square$ The runtime complexity is $\Theta(n^2)$
 
 [Reference](https://medium.com/@bostjan_cigan/understanding-time-complexity-of-recursive-algorithms-13b3efa3a322)
 
